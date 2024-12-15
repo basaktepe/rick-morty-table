@@ -1,8 +1,45 @@
-# React + Vite
+# Rick and Morty Character Explorer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React application that allows users to explore characters from the Rick and Morty universe with advanced filtering, sorting, and pagination capabilities.
 
-Currently, two official plugins are available:
+##  Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Character Listing**: Display characters in a responsive table format
+- **Filtering**: Filter characters by:
+  - Name
+  - Status (Alive, Dead, Unknown)
+  - Species (Human, Alien, Humanoid, Robot)
+  - Gender (Female, Male, Genderless, Unknown)
+- **Sorting**: Sort characters by multiple fields in ascending or descending order
+- **Pagination**: Navigate through character pages with customizable page sizes
+- **Character Details**: View detailed information about each character
+- **Responsive Design**: Fully responsive layout that works on all device sizes
+- **Loading States**: Visual feedback during data fetching
+- **Error Handling**: Graceful error handling and display
+
+## 🛠️ Tech Stack
+
+- **React**: UI library
+- **Redux Toolkit**: State management
+- **React Router**: Navigation
+- **Material-UI**: UI components (Pagination, Backdrop)
+- **Tailwind CSS**: Styling
+- **Rick and Morty API**: Data source
+
+## ⚙️ Installation
+
+1. Clone the repository:
+```bash
+git clone [repository-url]
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Start the development server:
+```bash
+npm run dev
+```
+
