@@ -9,9 +9,18 @@ export const fetchCharacters = createAsyncThunk(
         .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
         .join("&");
 
-      const url = `https://rickandmortyapi.com/api/character/?page=${page}&${filterParams}`;
+      const firstPageUrl = `https://rickandmortyapi.com/api/character/?${filterParams}`;
+      const firstPageResponse = await fetch(firstPageUrl);
+      const firstPageData = await firstPageResponse.json();
+      const maxPage = firstPageData.info.pages;
 
+      if (page > maxPage) {
+        page = maxPage;
+      }
+
+      const url = `https://rickandmortyapi.com/api/character/?page=${page}&${filterParams}`;
       const response = await fetch(url);
+
       if (!response.ok) {
         throw new Error("API request failed");
       }
@@ -30,17 +39,13 @@ export const fetchCharacters = createAsyncThunk(
         });
       }
 
-      const itemsPerPage = parseInt(pageSize);
-      const totalCount = data.info.count;
-      const totalPages = Math.ceil(totalCount / itemsPerPage);
-
       if (pageSize > 20) {
         const additionalPagesNeeded = Math.ceil(pageSize / 20) - 1;
         const additionalRequests = [];
 
         for (let i = 1; i <= additionalPagesNeeded; i++) {
           const nextPage = page + i;
-          if (nextPage <= data.info.pages) {
+          if (nextPage <= maxPage) {
             additionalRequests.push(
               fetch(
                 `https://rickandmortyapi.com/api/character/?page=${nextPage}&${filterParams}`
@@ -55,11 +60,11 @@ export const fetchCharacters = createAsyncThunk(
         results = [...results, ...additionalResults.flat()];
       }
 
-      results = results.slice(0, itemsPerPage);
+      results = results.slice(0, pageSize);
 
       return {
         results,
-        totalPages: Math.ceil(data.info.count / pageSize),
+        totalPages: maxPage,
       };
     } catch (error) {
       return rejectWithValue(error.message);
@@ -102,7 +107,7 @@ const characterSlice = createSlice({
       gender: "",
     },
     sort: "",
-    totalPages: 42,
+    totalPages: 1,
   },
   reducers: {
     setPage: (state, action) => {
