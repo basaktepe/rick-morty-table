@@ -1,4 +1,5 @@
 # Rick and Morty Character Explorer
+ rick-morty-table-mauve.vercel.app
 
 A React application that allows users to explore characters from the Rick and Morty universe with advanced filtering, sorting, and pagination capabilities.
 
